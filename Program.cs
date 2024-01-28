@@ -1,3 +1,8 @@
+using JetStoreAPI.Data;
+using JetStoreAPI.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+
 namespace JetStoreAPI
 {
     public class Program
@@ -7,11 +12,21 @@ namespace JetStoreAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
-            builder.Services.AddControllers();
+            
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddControllers()
+                .AddJsonOptions(x =>
+                {
+                    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                    x.JsonSerializerOptions.PropertyNamingPolicy = null;
+                });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<DataContext>(options =>
+            {
+                options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             var app = builder.Build();
 
