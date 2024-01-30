@@ -3,6 +3,7 @@ using JetStoreAPI.Entities;
 using JetStoreAPI.Extensions;
 using JetStoreAPI.Helpers;
 using JetStoreAPI.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -37,7 +38,19 @@ namespace JetStoreAPI.Controllers
             return Ok(items);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Item>> GetItem(int id)
+        {
+            var item = await _unitOfWork.ItemsRepository.GetItemById(id);
+            if(item == null)
+            {
+                return BadRequest(new { message = "Sorry, there is no item with such id." }); ;
+            }
+            return Ok(item);
+        }
+
         [HttpPost]
+        [Authorize (Policy = "RequiredEmployeeRole")]
         public async Task<ActionResult<ItemDto>> AddItem(ItemDto itemDto)
         {
             Category category = await _unitOfWork.CategoriesRepository.GetCategoryById(itemDto.CategoryId);
@@ -63,6 +76,7 @@ namespace JetStoreAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "RequiredEmployeeRole")]
         public async Task<ActionResult> DeleteItem(int id)
         {
             var item = await _unitOfWork.ItemsRepository.GetItemById(id);
@@ -76,7 +90,9 @@ namespace JetStoreAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = "RequiredEmployeeRole")]
         public async Task<ActionResult<Item>> UpdateItem(ItemDto itemDto)
+
         {
             var item = await _unitOfWork.ItemsRepository.GetItemById(itemDto.Id);
             if (item == null)

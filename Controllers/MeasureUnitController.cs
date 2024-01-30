@@ -1,10 +1,12 @@
 ﻿using JetStoreAPI.DTO;
 using JetStoreAPI.Entities;
 using JetStoreAPI.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JetStoreAPI.Controllers
 {
+    [Authorize(Policy = "RequiredEmployeeRole")]
     public class MeasureUnitController : BaseApiController
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -69,7 +71,7 @@ namespace JetStoreAPI.Controllers
             if (unit == null) return BadRequest(new { message = "Sorry, there is no such unit of measure." });
             var items = await _unitOfWork.ItemsRepository.GetItems(null);
             if(items.Any(x => x.Unit == unit))
-                return BadRequest(new { message = "Sorry, could not delete this unit - some items using it." });
+                return BadRequest(new { message = "Sorry, could not delete this unit - some items are using it." });
             _unitOfWork.MeasureUnitsRepository.DeleteMeasureUnit(unit);
 
             if (await _unitOfWork.Complete())

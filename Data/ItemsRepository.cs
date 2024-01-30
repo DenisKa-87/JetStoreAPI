@@ -57,6 +57,28 @@ namespace JetStoreAPI.Data
                 items = items.Where(x => x.Quantity >= itemParams.MinQuantity);
             if (itemParams.MaxQuantity != null)
                 items = items.Where(x => x.Quantity <= itemParams.MaxQuantity);
+            if(itemParams.Order != null)
+            {
+                switch (itemParams.Order.ToLower())
+                { 
+                    case "priceDesc":
+                        items = items.OrderByDescending(x => x.Price);
+                        break;
+                    case "quantity":
+                        items = items.OrderBy(x => x.Quantity);
+                        break;
+                    case "quantityDesc":
+                        items = items.OrderByDescending(x => x.Quantity);
+                        break;
+                    case "category":
+                        items = items.OrderBy(x => x.Category.Name); 
+                        break;
+                    
+                    default:
+                        items = items.OrderBy(x => x.Price);
+                        break;
+                }
+            }
             return await items.ToListAsync();
 
 

@@ -2,6 +2,7 @@
 using JetStoreAPI.DTO;
 using JetStoreAPI.Entities;
 using JetStoreAPI.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SQLitePCL;
 
@@ -23,6 +24,7 @@ namespace JetStoreAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "RequiredEmployeeRole")]
         public async Task<ActionResult<Category>> AddCategory(CategoryDto categoryDto)
         {
             var category = await CategoryExistsAsync(categoryDto);
@@ -49,6 +51,7 @@ namespace JetStoreAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "RequiredEmployeeRole")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
             var category = await _unitOfWork.CategoriesRepository.GetCategoryById(id);
@@ -58,7 +61,7 @@ namespace JetStoreAPI.Controllers
             }
             var items = await _unitOfWork.ItemsRepository.GetItems(new Helpers.ItemParams() { CategoryId = id });
             if(items != null)
-                return BadRequest(new { message = "Sorry, could not delete this category - some items using it." });
+                return BadRequest(new { message = "Sorry, could not delete this category - some items are using it." });
             _unitOfWork.CategoriesRepository.DeleteCategory(category);
             if (await _unitOfWork.Complete())
             {
@@ -68,6 +71,7 @@ namespace JetStoreAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize(Policy = "RequiredEmployeeRole")]
         public async Task<ActionResult<Category>> UpdateCategory(CategoryDto categoryDto)
         {
             var oldCategory = await _unitOfWork.CategoriesRepository.GetCategoryById(categoryDto.Id);

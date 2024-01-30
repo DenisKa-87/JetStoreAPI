@@ -3,6 +3,7 @@ using System;
 using JetStoreAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JetStoreAPI.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240129151416_AppUserAdded")]
+    partial class AppUserAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.26");
@@ -135,9 +137,19 @@ namespace JetStoreAPI.Data.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("RoleId1")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId1")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("RoleId1");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
@@ -323,15 +335,27 @@ namespace JetStoreAPI.Data.Migrations
 
             modelBuilder.Entity("JetStoreAPI.Entities.AppUserRole", b =>
                 {
-                    b.HasOne("JetStoreAPI.Entities.AppRole", "Role")
-                        .WithMany("UserRoles")
+                    b.HasOne("JetStoreAPI.Entities.AppRole", null)
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JetStoreAPI.Entities.AppUser", "User")
+                    b.HasOne("JetStoreAPI.Entities.AppRole", "Role")
                         .WithMany("UserRoles")
+                        .HasForeignKey("RoleId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JetStoreAPI.Entities.AppUser", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JetStoreAPI.Entities.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -407,11 +431,6 @@ namespace JetStoreAPI.Data.Migrations
                 });
 
             modelBuilder.Entity("JetStoreAPI.Entities.AppRole", b =>
-                {
-                    b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("JetStoreAPI.Entities.AppUser", b =>
                 {
                     b.Navigation("UserRoles");
                 });

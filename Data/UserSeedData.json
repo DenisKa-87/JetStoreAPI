@@ -1,0 +1,26 @@
+[
+    {
+        "Email": "example1@mail.ru",
+        "Password": "Passw0rd",
+        "Name": "Ivan",
+        "Surname": "Ivanov",
+        "Paternal": "Ivanovich",
+        "DateOfBirth": "2000-01-29"
+      },
+      {
+        "Email": "example2@mail.ru",
+        "Password": "Passw0rd",
+        "Name": "Frodo",
+        "Surname": "",
+        "Paternal": "Baggins",
+        "DateOfBirth": "1990-01-29"
+      },
+      {
+        "Email": "example3@mail.ru",
+        "Password": "Passw0rd",
+        "Name": "Peter",
+        "Surname": "Petrov",
+        "Paternal": "Petrovich",
+        "DateOfBirth": "2006-01-29"
+      }
+]

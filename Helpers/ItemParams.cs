@@ -7,6 +7,7 @@
         public double? MaxPrice { get; set; }
         public double? MinQuantity { get; set; }
         public double? MaxQuantity { get; set; }
+        public int? CategoryId { get; set; } = 0;
 
     }
 }

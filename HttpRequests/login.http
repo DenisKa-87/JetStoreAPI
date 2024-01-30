@@ -1,0 +1,7 @@
+POST https://localhost:7141/api/Account/login
+Content-Type: application/json
+
+{
+    "email": "example2@mail.ru",
+    "password": "Pa$$w0rd"
+}

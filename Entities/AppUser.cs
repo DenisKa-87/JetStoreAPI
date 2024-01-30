@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using JetStoreAPI.DTO;
+using Microsoft.AspNetCore.Identity;
 
 namespace JetStoreAPI.Entities
 {
@@ -7,16 +8,23 @@ namespace JetStoreAPI.Entities
         public string Name { get; set; }
         public string Surname { get; set; }
 
+        public string Paternal {  get; set; }
         public DateOnly? DateOfBirth { get; set; }
 
         public DateOnly CreatedAt { get; set; }
+        public ICollection<AppUserRole> UserRoles { get; set; }
 
-        public AppUser(string Name, string Surname, DateOnly dateOfBirth)
+        public static AppUser Create(RegisterDto registerDto)
         {
-            this.Name = Name;
-            this.Surname = Surname;
-            DateOfBirth = dateOfBirth;
-            CreatedAt = DateOnly.FromDateTime(DateTime.Now);
+            var user = new AppUser();
+            user.Name = registerDto.Name;
+            user.Surname = registerDto.Surname;
+            user.Paternal = registerDto.Paternal;
+            user.UserName = registerDto.Email;
+            user.Email = registerDto.Email;
+            user.DateOfBirth = registerDto.DateOfBirth;
+            user.CreatedAt = DateOnly.FromDateTime(DateTime.Now);
+            return user;
         }
 
     }
