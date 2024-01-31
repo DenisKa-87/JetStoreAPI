@@ -44,5 +44,10 @@ namespace JetStoreAPI.Data
             measureUnit.Name = measureUnitDto.Name;
             measureUnit.IntOnly = measureUnitDto.IntOnly;
         }
+
+        public async Task<bool> AnyAsync()
+        {
+            return await _context.MeasureUnits.AnyAsync();
+        }
     }
 }

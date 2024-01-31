@@ -34,19 +34,11 @@ namespace JetStoreAPI.Controllers
                 return Unauthorized("The user with such email is not found.");
             }
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-            if(result.Succeeded)
-            {
-                return new AppUserDto
-                {
-                    Email = user.Email,
-                    Name = user.Name,
-                    Surname = user.Surname,
-                    Paternal = user.Paternal,
-                    Token = await _tokenService.GetToken(user),
-                    DateOfBirth = user.DateOfBirth
-                };
-            }
-            return BadRequest(new { message = "Something went wrong, could not log in" });
+            if(!result.Succeeded)
+                return BadRequest(new { message = "Something went wrong, could not log in" });
+            var userDto = AppUserDto.Create(user);
+            userDto.Token = await _tokenService.GetToken(user);
+            return Ok(userDto);
         }
 
         [HttpPost("register")]
@@ -64,7 +56,9 @@ namespace JetStoreAPI.Controllers
             var roleResult = await _userManager.AddToRoleAsync(user, "Customer");
             if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
 
-            return Ok(new { message = "You have successfully registered. Please log in."});
+            var userDto = AppUserDto.Create(user);
+            userDto.Token = await _tokenService.GetToken(user);
+            return Ok(userDto);
         }
 
         [HttpPost("create-new-employee")]
@@ -82,7 +76,7 @@ namespace JetStoreAPI.Controllers
             var roleResult = await _userManager.AddToRoleAsync(user, "Employee");
             if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
 
-            return Ok(new { message = $"The user \"{string.Join(' ', user.Name, user.Paternal, user.Surname)}\" has been registered. " });
+            return Ok(new { message = $"The user '{string.Join(' ', user.Name, user.Paternal, user.Surname)}' has been registered." });
         }
 
 
@@ -102,15 +96,13 @@ namespace JetStoreAPI.Controllers
             user.DateOfBirth = newUser.DateOfBirth;
             user.CreatedAt = DateOnly.FromDateTime(DateTime.Now);
             _unitOfWork.UsersRepository.UpdateUser(user);
+            
             if (await _unitOfWork.Complete())
-                return Ok(new AppUserDto
-                {
-                    Name = user.Name,
-                    Surname = user.Surname,
-                    Paternal = user.Paternal,
-                    DateOfBirth = user.DateOfBirth,
-                    Token = await _tokenService.GetToken(user)
-                });
+            {
+                var userDto = AppUserDto.Create(user);
+                userDto.Token = await _tokenService.GetToken(user);
+                return Ok(userDto);
+            } 
             return BadRequest(new { message = "Failed to update user"});
 
 

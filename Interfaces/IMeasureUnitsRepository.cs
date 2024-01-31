@@ -11,6 +11,7 @@ namespace JetStoreAPI.Interfaces
         void AddMeasureUnit(MeasureUnit measureUnit);
         void UpdateMeasureUnit(MeasureUnit measureUnit, MeasureUnitDto measureUnitDto);
         void DeleteMeasureUnit(MeasureUnit measureUnit);
+        Task<bool> AnyAsync();
 
     }
 }

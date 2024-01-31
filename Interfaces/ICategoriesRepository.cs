@@ -12,5 +12,6 @@ namespace JetStoreAPI.Interfaces
         void AddCategory(Category category);
         void UpdateCategory(Category oldCategory, CategoryDto newCategory);
         void DeleteCategory(Category category);
+        Task<bool> AnyAsync();
     }
 }

@@ -68,8 +68,13 @@ namespace JetStoreAPI
                 var context = scope.ServiceProvider.GetRequiredService<DataContext>();
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
+                var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
                 await context.Database.MigrateAsync();
                 await Seed.SeedUsers(userManager, roleManager);
+                Seed.SeedCategories(unitOfWork);
+                Seed.SeedUnits(unitOfWork);
+                Seed.SeedItems(unitOfWork);
+                
             }
             catch (Exception ex)
             {

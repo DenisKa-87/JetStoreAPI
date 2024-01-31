@@ -16,10 +16,6 @@ namespace JetStoreAPI.Entities
         public ICollection<Feature> Features { get; set; }
         public MeasureUnit Unit { get; set; }
 
-        //public Item()
-        //{
-
-        //}
 
 
         public static Item CreateItem(ItemDto itemDto, Category category, MeasureUnit measureUnit)

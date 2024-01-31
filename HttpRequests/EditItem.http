@@ -1,13 +1,20 @@
-# For more info on HTTP files go to https://aka.ms/vs/httpfile
-POST https://localhost:7141/api/account/create-new-employee
+PUT https://localhost:5000/api/items
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxNiIsInVuaXF1ZV9uYW1lIjoiYWRtaW4iLCJyb2xlIjpbIkVtcGxveWVlIiwiQWRtaW4iXSwibmJmIjoxNzA2NjA4Njk4LCJleHAiOjE3MDcyMTM0OTgsImlhdCI6MTcwNjYwODY5OH0.ZzwgW9C74hQQfCQRkApsO7FeVW5hcb8lh1P63uT7BTN_5Gi-t3goTlrXVKrWEcig3scIwTMCrSfr1nz9v7Qt9Q
 Content-Type: application/json
 
 {
-    "Email": "new2@mail.ru",
-    "Password": "Pa$$w0rd",
-    "Name": "John",
-    "Paternal": "",
-    "Surname": "Smith",
-    "Date of birth" : "1988-09-09"
+  "Id": 3,
+  "Name": "edited3",
+  "Description": "edited3",
+  "CategoryId": 1,
+  "Price": 100500,
+  "Quantity": 100500,
+  "MeasureUnitId": 1,
+  "ImageUrl": "edited3",
+  "Features": [
+    {
+      "Item1": "edited",
+      "Item2": "edited"
+    }
+  ]
 }

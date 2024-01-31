@@ -1,0 +1,37 @@
+[
+  {
+    "Id": 0,
+    "Name": "Happy cow's milk",
+    "Description": "Fresh milk from happiest cows!",
+    "CategoryId": 5,
+    "Price": 10,
+    "Quantity": 100,
+    "MeasureUnitId": 6,
+    "ImageUrl": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.123rf.com%2Fphoto_16819009_plastic-bottle-of-milk-with-label-isolated-on-white.html&psig=AOvVaw32MUHa-Fc6A1mLfZQDcjIQ&ust=1706814912403000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKjyt5ariIQDFQAAAAAdAAAAABAR",
+    "Features": [
+    ]
+  },
+  {
+    "Id": 0,
+    "Name": "Sour cream",
+    "Description": "Put it in your borsch!",
+    "CategoryId": 5,
+    "Price": 7,
+    "Quantity": 100,
+    "MeasureUnitId": 8,
+    "ImageUrl": "https://dastarkhan24.kz/upload/iblock/2af/2af109138921cc4400bff4b8225a9d35.jpg",
+        "Features": [
+    ]
+  },
+  {
+    "Id": 0,
+    "Name": "banana",
+    "Description": "Yellow!",
+    "CategoryId": 3,
+    "Price": 3,
+    "Quantity": 100,
+    "MeasureUnitId": 7,
+    "ImageUrl": "https://freshfood.by/wp-content/uploads/2020/06/banan.png",
+        "Features": []
+  }
+]

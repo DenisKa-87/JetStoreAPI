@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JetStoreAPI.Controllers
 {
-    [Authorize(Policy = "RequiredEmployeeRole")]
+    [Authorize(Policy = "RequireEmployeeRole")]
     public class MeasureUnitController : BaseApiController
     {
         private readonly IUnitOfWork _unitOfWork;

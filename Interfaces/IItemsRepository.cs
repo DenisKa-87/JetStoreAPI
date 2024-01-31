@@ -12,6 +12,7 @@ namespace JetStoreAPI.Interfaces
         Task<IEnumerable<Item>> GetItemsByName(string name);
         Task<Item> GetItemById(int id);
         Task<IEnumerable<Item>> GetItems(ItemParams? itemParams);
+        Task<bool> AnyAsync();
 
     }
 }

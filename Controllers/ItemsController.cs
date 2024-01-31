@@ -32,8 +32,8 @@ namespace JetStoreAPI.Controllers
             [FromQuery] string? order
             )
         {
-            ItemParams query = CreateQuery(name = null, minPrice = "0", maxPrice ="", categoryId = null ,
-                minQuantity = "0", maxQuantity = "", order = "");
+            ItemParams query = CreateQuery(name, minPrice, maxPrice, categoryId ,
+                minQuantity, maxQuantity, order);
             var items = await _unitOfWork.ItemsRepository.GetItems(query);
             return Ok(items);
         }
@@ -50,7 +50,7 @@ namespace JetStoreAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize (Policy = "RequiredEmployeeRole")]
+        [Authorize (Policy = "RequireEmployeeRole")]
         public async Task<ActionResult<ItemDto>> AddItem(ItemDto itemDto)
         {
             Category category = await _unitOfWork.CategoriesRepository.GetCategoryById(itemDto.CategoryId);
@@ -76,7 +76,7 @@ namespace JetStoreAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Policy = "RequiredEmployeeRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         public async Task<ActionResult> DeleteItem(int id)
         {
             var item = await _unitOfWork.ItemsRepository.GetItemById(id);
@@ -90,7 +90,7 @@ namespace JetStoreAPI.Controllers
         }
 
         [HttpPut]
-        [Authorize(Policy = "RequiredEmployeeRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         public async Task<ActionResult<Item>> UpdateItem(ItemDto itemDto)
 
         {
@@ -105,8 +105,6 @@ namespace JetStoreAPI.Controllers
             if (measureUnit == null)
                 return BadRequest(new { message = "Sorry, there is no such unit of measure." });
             var updatedItem = Item.CreateItem(itemDto, category, measureUnit);
-            if(await ItemExists(updatedItem) != null)
-                return BadRequest(new { message = "Sorry, such item already exists" });
             _unitOfWork.ItemsRepository.UpdateItem(item, updatedItem);
             if (await _unitOfWork.Complete())
                 return Ok(item);

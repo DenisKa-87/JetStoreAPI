@@ -45,9 +45,9 @@ namespace JetStoreAPI.Data
                 return await _context.Items.ToListAsync();
             var items = _context.Items.Include(x => x.Category).Include(x => x.Unit).Include(x => x.Features)
                 .AsQueryable();
-            if (itemParams.Name != null)
+            if (itemParams.Name != null && itemParams.Name != "")
                 items = items.Where(x => x.Name.ToLower() == itemParams.Name.ToLower());
-            if (itemParams.CategoryId != null || itemParams.CategoryId > 0)
+            if (itemParams.CategoryId != null && itemParams.CategoryId > 0)
                 items = items.Where(x => x.Category.Id == itemParams.CategoryId);
             if(itemParams.MinPrice != null)
                 items = items.Where(x => x.Price >= itemParams.MinPrice);
@@ -61,13 +61,13 @@ namespace JetStoreAPI.Data
             {
                 switch (itemParams.Order.ToLower())
                 { 
-                    case "priceDesc":
+                    case "pricedesc":
                         items = items.OrderByDescending(x => x.Price);
                         break;
                     case "quantity":
                         items = items.OrderBy(x => x.Quantity);
                         break;
-                    case "quantityDesc":
+                    case "quantitydesc":
                         items = items.OrderByDescending(x => x.Quantity);
                         break;
                     case "category":
@@ -90,6 +90,10 @@ namespace JetStoreAPI.Data
             ChangeItemProps(oldItem, newItem);
         }
 
+        public  async Task<bool> AnyAsync()
+        {
+            return await _context.Items.AnyAsync();
+        }
         private static void ChangeItemProps(Item item, Item newItem)
         {
             

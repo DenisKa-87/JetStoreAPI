@@ -1,0 +1,22 @@
+[
+  {
+    "Id": 0,
+    "Name": "Bottle 1 l.",
+    "intonly": "true"
+  },
+  {
+    "Id": 0,
+    "Name": "kg",
+    "intonly": "false"
+  },
+  {
+    "Id": 0,
+    "Name": "piece 500g.",
+    "intonly": "true"
+  },
+  {
+    "Id": 0,
+    "Name": "liter",
+    "intonly": "false"
+  }
+]

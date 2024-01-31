@@ -16,14 +16,16 @@ namespace JetStoreAPI.Entities
 
         public static AppUser Create(RegisterDto registerDto)
         {
-            var user = new AppUser();
-            user.Name = registerDto.Name;
-            user.Surname = registerDto.Surname;
-            user.Paternal = registerDto.Paternal;
-            user.UserName = registerDto.Email;
-            user.Email = registerDto.Email;
-            user.DateOfBirth = registerDto.DateOfBirth;
-            user.CreatedAt = DateOnly.FromDateTime(DateTime.Now);
+            var user = new AppUser
+            {
+                Name = registerDto.Name,
+                Surname = registerDto.Surname,
+                Paternal = registerDto.Paternal,
+                UserName = registerDto.Email,
+                Email = registerDto.Email,
+                DateOfBirth = registerDto.DateOfBirth,
+                CreatedAt = DateOnly.FromDateTime(DateTime.Now)
+            };
             return user;
         }
 

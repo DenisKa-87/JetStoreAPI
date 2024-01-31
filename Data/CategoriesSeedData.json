@@ -1,0 +1,17 @@
+[
+  {
+    "Id": 0,
+    "Name": "Fruits",
+    "Description": "Fresh fruits"
+  },
+  {
+    "Id": 0,
+    "Name": "Meat",
+    "Description": "Cow, veil etc"
+  },
+  {
+    "Id": 0,
+    "Name": "Dairy",
+    "Description": "Milk, sour cream etc"
+  }
+]

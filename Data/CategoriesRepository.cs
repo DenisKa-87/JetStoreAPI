@@ -46,5 +46,10 @@ namespace JetStoreAPI.Data
            oldCategory.Name = newCategory.Name;
            oldCategory.Description = newCategory.Description;
         }
+
+        public async Task<bool> AnyAsync()
+        {
+            return await _context.Categories.AnyAsync();
+        }
     }
 }
